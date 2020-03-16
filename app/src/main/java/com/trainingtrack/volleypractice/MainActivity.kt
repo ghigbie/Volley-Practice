@@ -7,6 +7,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,14 +18,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-        val jsonObjectRequest: JsonObjectRequest = JsonObjectRequest(
-                Request.Method.GET, url, null,
-                Response.Listener { response ->
-
-                }
-        )
+        mainText.setOnClickListener {
+            val jsonObjectRequest: JsonObjectRequest = JsonObjectRequest(
+                    Request.Method.GET, url, null,
+                    Response.Listener { response ->
+                        mainText.text = "Response: %s".format(response.toString())
+                    },
+                    Response.ErrorListener { error ->
+                        mainText.text = "Error: %s".format(error.toString())
+                    }
+            )
+            que.add(jsonObjectRequest)
+        }
 
 
     }
